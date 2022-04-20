@@ -1,0 +1,11 @@
+nav {
+    background-color: #ff2e77;
+    padding:  20px;
+    color: aliceblue;
+}
+
+.navitem {
+    margin-right: 20px;
+    text-decoration: none;
+    color: white;
+}
