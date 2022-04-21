@@ -1,0 +1,64 @@
+body {
+  background-color: #f28ab2;
+  height: 100%;
+  width: 100%;
+}
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 45px;
+}
+.list-area h1 {
+  color: red;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.list-area {
+  width: 32vw;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 0.25rem;
+  background-color: whitesmoke;
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+}
+.list-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column: 5px;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.list-info img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.info h3 {
+  margin-bottom: 0.2rem;
+  color: rgb(107, 98, 98);
+}
+.info p {
+  color: #74676c;
+}
+.button-clr {
+  width: 100%;
+  height: 2.6rem;
+  font-size: 20px;
+  cursor: pointer;
+  /* margin: 25px; */
+  align-items: center;
+  margin-top: 25px;
+  background-color: rgb(18, 211, 121);
+  outline: 1px solid rgba(242, 138, 178, 0.8);
+  padding: 0.5rem 0;
+  color: wheat;
+  display: block;
+  border-color: transparent;
+}
+.button-clr:hover {
+  background-color: violet;
+  transition: 10ms;
+}
+/* list */
