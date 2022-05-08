@@ -1,65 +1,50 @@
-import React, { useState } from "react";
-import data from "./data/images.json";
-import Modal from "./Component/Modal";
-const App = () => {
-  const [clickedImg, setClickedImg] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
+import SearchBar from "./Components/SearchBar";
+import RecipeCard from "./Components/RecipeCard";
+import { useEffect, useState, useRef } from "react";
 
-  const handleClik = (item, index) => {
-    setCurrentIndex(index);
-    setClickedImg(item.link);
+const apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+
+export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
+  const [recipes, setRecipes] = useState([]);
+
+  const searchRecipe = async () => {
+    setIsLoading(true);
+    const url = apiUrl + query;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data);
+    setRecipes(data.meals);
+    setIsLoading(false);
   };
 
-   const handleRotationRight = () => {
-    const totalLength = data.data.length;
-    if(currentIndex +1 >totalLength) {
-      setCurrentIndex(0);
-      const newUrl = data.data[0].link;
-      setClickedImg(newUrl);
-      return;
-    }
-    const newIndex = currentIndex +1;
-    const newUrl = data.data.filter(item => {
-      return data.data.indexOf(item) === newIndex;
-    });
+  useEffect(() => {
+    searchRecipe();
+    console.log("useEffect")
+  }, [query]);
 
-    const newItem = newUrl[0].link;
-    setClickedImg(newItem);
-    setCurrentIndex(newIndex);
-  } 
-/*   const handleRotationRight = () => {
-    const totalLength = data.data.length;
-    if (currentIndex + 1 >= totalLength) {
-      setCurrentIndex(0);
-      const newUrl = data.data[0].link;
-      setClickedImg(newUrl);
-      return;
-    }
-    const newIndex = currentIndex + 1;
-    const newUrl = data.data.filter((item) => {
-      return data.data.indexOf(item) === newIndex;
-    });
-    const newItem = newUrl[0].link;
-    setClickedImg(newItem);
-    setCurrentIndex(newIndex);
-  }; */
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   searchRecipe();
+  // };
   return (
-    <div className="wrapper">
-      {data.data.map((item, index) => {
-        return (
-          <div key={index} className="wrapper-images">
-            <img
-              src={item.link}
-              alt={item.text}
-              onClick={() => handleClik(item, index)}
-            />
-            <h2>{item.text}</h2>
-          </div>
-        );
-      })}
-      {clickedImg && <Modal clickedImg={clickedImg} setClickedImg={setClickedImg} handleRotationRight={handleRotationRight} />}
+    <div className="container">
+      <h1>Food Recipe</h1>
+      <SearchBar
+        setQuery = {(query)=>setQuery(query)}
+        // handleSubmit={handleSubmit}
+        // value={query}
+        // onChange={(event) => setQuery(event.target.value)}
+        isLoading={isLoading}
+      />
+      <div className="recipes">
+        {recipes
+          ? recipes.map((recipe) => (
+              <RecipeCard key={recipe.idMeal} recipe={recipe} />
+            ))
+          : "No Recipes!"}
+      </div>
     </div>
   );
-};
-
-export default App;
+}
